@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>noVNC</title>
+    <style>
+        body { margin: 0; background: black; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        #screen { width: 100%; height: 100%; }
+        /* Add some loading text */
+        #screen::before { content: "Verbinde mit VM Display (VNC)..."; color: white; font-family: sans-serif; position: absolute; z-index: -1; }
+    </style>
+    <!-- Use jsdelivr for noVNC modules directly -->
+    <script type="module">
+        import RFB from "https://cdn.jsdelivr.net/npm/@novnc/novnc@1.4.0/core/rfb.js";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const host = urlParams.get("host") || "127.0.0.1";
+            const port = urlParams.get("port") || "5901"; // QEMU Websocket Port
+            
+            const url = "ws://" + host + ":" + port;
+            console.log("Connecting to " + url);
+            try {
+                const rfb = new RFB(document.getElementById("screen"), url, {
+                    wsProtocols: ['binary']
+                });
+                
+                rfb.addEventListener("connect", () => {
+                    console.log("Connected to VNC");
+                });
+                rfb.addEventListener("disconnect", (e) => {
+                    console.log("Disconnected from VNC", e);
+                });
+                rfb.scaleViewport = true;
+                rfb.resizeSession = true;
+            } catch(e) {
+                console.error("VNC Error", e);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="screen"></div>
+</body>
+</html>

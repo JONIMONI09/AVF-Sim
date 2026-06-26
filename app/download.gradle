@@ -1,0 +1,13 @@
+tasks.register("downloadPodroid") {
+    doLast {
+        val f = file("podroid.zip")
+        new URL("https://github.com/ExTV/Podroid/archive/refs/heads/main.zip").withInputStream { i ->
+            f.withOutputStream { it << i }
+        }
+        
+        copy {
+            from zipTree(f)
+            into "podroid-source"
+        }
+    }
+}

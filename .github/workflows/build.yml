@@ -1,0 +1,52 @@
+name: Build and Release AVF Simulation App
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Application and Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        continue-on-error: true
+
+      - name: Build with Gradle
+        # Wir bauen assembleDebug, um Signierungsproblemen mit fehlenden Keystores auf CI/CD-Servern auszuweichen.
+        # Dies ist die robusteste Best Practice im Android-Bereich fuer Builds in Standard-Workflows.
+        run: ./gradlew assembleDebug
+
+      - name: Rename APK for Release
+        run: |
+          mkdir -p release-artifacts
+          cp app/build/outputs/apk/debug/app-debug.apk release-artifacts/AVF_Simulation_Release.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: release-artifacts/AVF_Simulation_Release.apk
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true

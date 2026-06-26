@@ -1,0 +1,8 @@
+{
+  "name": "Remix: AVF Simulation",
+  "description": "Eine interaktive Android Virtualization Framework (AVF) Simulations-App fuer Android 16 mit Shizuku-Unterstuetzung.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
