@@ -69,6 +69,14 @@ class MainActivity : ComponentActivity() {
     external fun executeNativeCommand(command: String): Int
     external fun forkAndExec(command: String): Int
 
+    private val binderReceivedListener = object : Shizuku.OnBinderReceivedListener {
+        override fun onBinderReceived() {
+            runOnUiThread {
+                Toast.makeText(this@MainActivity, "Shizuku-Binder empfangen!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     // Listener fuer Shizuku Berechtigungen
     private val shizukuListener = Shizuku.OnRequestPermissionResultListener { requestCode, grantResult ->
         if (requestCode == shizukuRequestCode) {
@@ -95,6 +103,7 @@ class MainActivity : ComponentActivity() {
 
         try {
             Shizuku.addRequestPermissionResultListener(shizukuListener)
+            Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
         } catch (e: Throwable) {
             // Shizuku ist nicht geladen oder nicht verfuegbar
         }
@@ -128,6 +137,7 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
         try {
             Shizuku.removeRequestPermissionResultListener(shizukuListener)
+            Shizuku.removeBinderReceivedListener(binderReceivedListener)
         } catch (e: Throwable) {
             // Ignorieren
         }
@@ -135,7 +145,11 @@ class MainActivity : ComponentActivity() {
 
     private fun checkShizukuActive(): Boolean {
         return try {
-            Shizuku.getVersion() > 0
+            if (Shizuku.pingBinder()) {
+                Shizuku.getVersion() > 0
+            } else {
+                false
+            }
         } catch (e: Throwable) {
             false
         }
@@ -173,15 +187,35 @@ class MainActivity : ComponentActivity() {
 
             var successCount = 0
             for (cmd in commands) {
-                val args = cmd.split(" ").toTypedArray()
+                val args = arrayOf("sh", "-c", cmd)
                 val processObj = try {
-                    val method = Shizuku::class.java.getMethod(
-                        "newProcess",
-                        Array<String>::class.java,
-                        Array<String>::class.java,
-                        String::class.java
-                    )
-                    method.invoke(null, args, null, null) as? java.lang.Process
+                    // Try different Shizuku.newProcess signatures as they can vary between versions
+                    val methods = Shizuku::class.java.methods.filter { it.name == "newProcess" }
+                    var foundMethod = methods.find { 
+                        it.parameterTypes.size == 3 && 
+                        it.parameterTypes[0] == Array<String>::class.java &&
+                        it.parameterTypes[1] == Array<String>::class.java &&
+                        it.parameterTypes[2] == String::class.java
+                    }
+                    
+                    if (foundMethod == null) {
+                         // Try 2-parameter version if 3-parameter fails
+                         foundMethod = methods.find {
+                             it.parameterTypes.size == 2 &&
+                             it.parameterTypes[0] == Array<String>::class.java &&
+                             it.parameterTypes[1] == Array<String>::class.java
+                         }
+                    }
+
+                    if (foundMethod != null) {
+                        if (foundMethod.parameterTypes.size == 3) {
+                            foundMethod.invoke(null, args, null, null) as? Process
+                        } else {
+                            foundMethod.invoke(null, args, null) as? Process
+                        }
+                    } else {
+                        null
+                    }
                 } catch (ex: Throwable) {
                     null
                 }
@@ -484,7 +518,21 @@ fun AVFSimulatorApp(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
             if (uri != null) {
-                editPrimaryDisk = uri.toString()
+                scope.launch {
+                    try {
+                        addLog("Importiere Festplatten-Image: $uri ...")
+                        val localPath = StorageHelper.copyUriToInternalStorage(context, uri)
+                        if (localPath != null) {
+                            editPrimaryDisk = localPath
+                            addLog("Erfolgreich importiert nach: $localPath", isSuccess = true)
+                            reloadVirtualDisksList()
+                        } else {
+                            addLog("Fehler beim Importieren des Images!", isError = true)
+                        }
+                    } catch (e: Exception) {
+                        addLog("Ausnahme beim Importieren: ${e.message}", isError = true)
+                    }
+                }
             }
         }
     )
@@ -493,7 +541,21 @@ fun AVFSimulatorApp(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
             if (uri != null) {
-                editSecondaryDisk = uri.toString()
+                scope.launch {
+                    try {
+                        addLog("Importiere CD-ROM/ISO: $uri ...")
+                        val localPath = StorageHelper.copyUriToInternalStorage(context, uri)
+                        if (localPath != null) {
+                            editSecondaryDisk = localPath
+                            addLog("Erfolgreich importiert nach: $localPath", isSuccess = true)
+                            reloadVirtualDisksList()
+                        } else {
+                            addLog("Fehler beim Importieren des ISO-Images!", isError = true)
+                        }
+                    } catch (e: Exception) {
+                        addLog("Ausnahme beim ISO-Import: ${e.message}", isError = true)
+                    }
+                }
             }
         }
     )
@@ -562,7 +624,7 @@ fun AVFSimulatorApp(
             val useProot = globalSelectedBackend == "proot"
             
             // Build absolute paths
-            val cleanPrimaryPath = if (profile.primaryDiskPath.isNotBlank()) profile.primaryDiskPath.replace("content://", "").replace("%2F", "/") else ""
+            val cleanPrimaryPath = profile.primaryDiskPath
             val rootDiskParams = if (cleanPrimaryPath.isNotBlank()) {
                 "-drive file=\"$cleanPrimaryPath\",if=virtio,format=raw "
             } else ""
@@ -586,9 +648,20 @@ fun AVFSimulatorApp(
 
             // The Command Construction
             val cmd = if (useProot) {
-                addLog("Modus: PRoot Wrapper (Direct CPU Execution)")
+                addLog("Modus: PRoot Wrapper (Podroid-Style Direct CPU Execution)")
                 val prootPath = "/data/data/${context.packageName}/files/proot"
-                "if [ -f \"$prootPath\" ]; then \"$prootPath\" -0 -r \"$cleanPrimaryPath\" -b /dev -b /sys -b /proc -w /root /bin/bash -c \"echo 'Wrapper Session gestartet...'; exec /bin/bash\"; else echo \"FEHLER: PRoot Binary nicht unter $prootPath gefunden. Lade ein PRoot Binary herunter für diese Architektur.\"; exit 1; fi"
+                val rootfs = cleanPrimaryPath.ifBlank { "/data/data/${context.packageName}/files/rootfs" }
+                
+                // Enhanced Podroid environment
+                val envVars = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin " +
+                             "TERM=xterm-256color " +
+                             "HOME=/root " +
+                             "USER=root " +
+                             "LANG=en_US.UTF-8 "
+                
+                val mounts = "-b /dev -b /sys -b /proc -b /dev/shm -b /data/data/${context.packageName}/files:/tmp "
+                
+                "if [ -f \"$prootPath\" ]; then $envVars \"$prootPath\" -0 -r \"$rootfs\" $mounts -w /root /bin/bash -c \"echo 'Podroid-Style Session gestartet...'; exec /bin/bash\"; else echo \"FEHLER: PRoot Binary nicht unter $prootPath gefunden.\"; exit 1; fi"
             } else if (useCrosvm) {
                 addLog("Modus: AVF / pKVM (Crosvm)")
                 // Echte AVF Crosvm Executable
@@ -1841,33 +1914,25 @@ fun AVFSimulatorApp(
                                     Button(
                                         onClick = {
                                             scope.launch {
-                                                addLog("Starte Download der statischen AArch64 Binaries (QEMU & PRoot)...")
+                                                addLog("Prüfe lokale Binaries (QEMU & PRoot)...")
                                                 val qemuPath = "/data/data/${context.packageName}/files/qemu-system-aarch64"
                                                 val prootPath = "/data/data/${context.packageName}/files/proot"
-                                                try {
-                                                    // In reality, download from a static release server. For simulation in this environment:
-                                                    val qemuFile = File(qemuPath)
-                                                    val prootFile = File(prootPath)
-                                                    qemuFile.parentFile?.mkdirs()
-                                                    
-                                                    // Mock binary creation - in a real app, you would download from a URL here.
-                                                    // Since this is a test environment, we create a script that acts as the binary.
-                                                    qemuFile.writeText("#!/system/bin/sh\necho 'Mock QEMU System (AArch64) executed'\n")
-                                                    prootFile.writeText("#!/system/bin/sh\necho 'Mock PRoot executed'\nexec \"\$@\"\n")
-                                                    
-                                                    // Set execute permissions natively
-                                                    Runtime.getRuntime().exec(arrayOf("chmod", "+x", qemuPath)).waitFor()
-                                                    Runtime.getRuntime().exec(arrayOf("chmod", "+x", prootPath)).waitFor()
-                                                    
-                                                    addLog("Download & Installation von QEMU und PRoot via C++ Toolkit erfolgreich abgeschlossen!", isSuccess = true)
-                                                } catch (e: Exception) {
-                                                    addLog("Fehler beim Installieren: ${e.message}", isError = true)
+                                                
+                                                val qemuFile = File(qemuPath)
+                                                val prootFile = File(prootPath)
+                                                
+                                                if (qemuFile.exists() && prootFile.exists()) {
+                                                    addLog("Binaries bereits installiert.", isSuccess = true)
+                                                } else {
+                                                    addLog("Binaries fehlen! Bitte laden Sie 'qemu-system-aarch64' und 'proot' (static aarch64) herunter und verschieben Sie diese nach: ", isError = true)
+                                                    addLog(qemuFile.parent ?: "/data/data/${context.packageName}/files/")
+                                                    addLog("Oder nutzen Sie 'adb push' für die Installation.")
                                                 }
                                             }
                                         },
                                         modifier = Modifier.fillMaxWidth()
                                     ) {
-                                        Text("QEMU & PRoot Binaries aktualisieren")
+                                        Text("Binaries Status prüfen")
                                     }
                                 }
                             }

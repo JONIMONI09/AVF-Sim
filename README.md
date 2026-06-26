@@ -5,7 +5,8 @@ A powerful, high-performance Android application to manage, configure, and boot 
 ## Features
 
 - **Native AVF & pKVM Support**: Boot virtual machines with near-native performance using Android's built-in Kernel-based Virtual Machine (KVM) and `crosvm`.
-- **Direct C++ PRoot Engine**: A native C++ JNI bridge (`avfsimulator` lib) to execute processes via PRoot/QEMU directly on the CPU, achieving Wine/Podroid-like speed bypassing standard Android execution constraints.
+- **Direct C++ PRoot Engine**: A high-performance native bridge utilizing a static PRoot engine with **Podroid-optimized bind mounts** (`/dev`, `/proc`, `/sys`, `/dev/shm`) and environment variables (`PATH`, `TERM`, `HOME`). This bypasses standard Android sandbox constraints to achieve near-native execution speeds for Linux environments.
+- **Rootfs Management**: Support for custom root filesystems, allowing you to run full Linux distributions (Debian, Ubuntu, Alpine) directly within the PRoot wrapper.
 - **QEMU / Limbo Fallback**: Robust fallback options for legacy systems using QEMU binaries.
 - **Foreground Service Persistence**: Virtual machines run isolated in a background Android service utilizing Partial WakeLocks to prevent Android from aggressively killing the VM.
 - **Integrated VM Display (noVNC)**: Seamlessly view and control the virtual machine's GUI via an embedded noVNC viewer rendering QEMU's WebSockets payload.

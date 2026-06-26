@@ -2,12 +2,21 @@ package com.example
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
+import rikka.shizuku.Shizuku
 import java.io.File
 
 object DiagnosticHelper {
     fun getDiagnosticText(context: Context): String {
         val pm = context.packageManager
         
+        // Shizuku check
+        val shizukuVersion = try { Shizuku.getVersion() } catch (e: Exception) { -1 }
+        val shizukuAvailable = shizukuVersion > 0
+        val shizukuPermission = if (shizukuAvailable) {
+            if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) "Granted" else "Denied"
+        } else "N/A"
+
         // File checks
         val apexPresent = File("/apex/com.android.virt").exists()
         val devKvm = File("/dev/kvm").exists()
@@ -36,9 +45,16 @@ object DiagnosticHelper {
                 if (vmmInstance != null) {
                     serviceReachable = true
                     try {
-                        val getCapsMethod = vmmClass.getMethod("getCapabilities")
-                        val caps = getCapsMethod.invoke(vmmInstance)
+                        val getCapabilitiesMethod = vmmClass.getMethod("getCapabilities")
+                        val caps = getCapabilitiesMethod.invoke(vmmInstance)
                         capsRaw = caps?.toString() ?: "unknown"
+                        
+                        // Check for Android 16 specific capabilities
+                        if (Build.VERSION.SDK_INT >= 36) {
+                            val isAnyVmTypeSupportedMethod = vmmClass.getMethod("isAnyVmTypeSupported")
+                            val anySupported = isAnyVmTypeSupportedMethod.invoke(vmmInstance)
+                            capsRaw += " (AnyVmTypeSupported: $anySupported)"
+                        }
                     } catch (e: Exception) {
                         capsRaw = "error fetching"
                     }
@@ -58,7 +74,19 @@ object DiagnosticHelper {
              capsRaw = "KVM present in /dev/kvm"
         }
 
+        val apiLevel = Build.VERSION.SDK_INT
+        val codename = Build.VERSION.CODENAME
+
         return """
+            System Info
+              API Level: $apiLevel
+              Codename: $codename
+
+            Shizuku
+              Available: $shizukuAvailable
+              Version: $shizukuVersion
+              Permission: $shizukuPermission
+
             Active backend
               $backend
 

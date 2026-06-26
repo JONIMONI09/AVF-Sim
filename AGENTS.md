@@ -8,7 +8,8 @@ This project is an advanced virtualization application for Android 16, utilizing
 ## Work Guidance
 - Follow Material Design 3 guidelines for the UI in Jetpack Compose.
 - Maintain fallback methods (QEMU/PRoot) for older Android versions or devices without AVF support.
-- Manage native speed execution directly via C++ syscall bindings in `app/src/main/cpp`.
+- Manage native speed execution directly via C++ syscall bindings in `app/src/main/cpp`. For PRoot, always maintain Podroid-style system bind mounts (`/dev`, `/sys`, `/proc`) to ensure compatibility with standard Linux binaries.
+- Environment variables for guest processes must include a standard Linux `PATH`, `TERM=xterm-256color`, and a valid `HOME` directory.
 - VM processes should be isolated and run asynchronously in a foreground service with a WakeLock to prevent system throttling.
 
 ## Verification
