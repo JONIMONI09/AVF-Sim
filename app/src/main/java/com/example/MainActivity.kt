@@ -56,11 +56,13 @@ class MainActivity : ComponentActivity() {
 
     private val shizukuRequestCode = 1421
     
-    init {
-        try {
-            System.loadLibrary("avfsimulator")
-        } catch (e: Exception) {
-            e.printStackTrace()
+    companion object {
+        init {
+            try {
+                System.loadLibrary("avfsimulator")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
     
