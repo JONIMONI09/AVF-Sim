@@ -84,6 +84,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
 
         try {
             Shizuku.addRequestPermissionResultListener(shizukuListener)
@@ -525,12 +531,26 @@ fun AVFSimulatorApp(
         }
     }
 
+    fun stopVMService() {
+        val serviceIntent = android.content.Intent(context, VMForegroundService::class.java)
+        context.stopService(serviceIntent)
+    }
+
     // -------------------------------------------------------------
     // Boot-Sequenz der ausgewählten VM (ECHTE AUSFÜHRUNG)
     // -------------------------------------------------------------
     fun bootVirtualMachine(profile: VMProfile) {
         scope.launch {
             vmState = VMState.BOOTING
+            
+            // Starte Foreground Service für Hintergrund-Betrieb und Wakelock
+            val serviceIntent = android.content.Intent(context, VMForegroundService::class.java)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                context.startForegroundService(serviceIntent)
+            } else {
+                context.startService(serviceIntent)
+            }
+            
             terminalLogs.clear()
             addLog("=== INITIATING NATIVE VM BOOT ===", isSuccess = true)
             addLog("Checking hypervisor capabilities (/dev/kvm)...")
@@ -599,9 +619,11 @@ fun AVFSimulatorApp(
                             val exitCode = (context as MainActivity).forkAndExec(cmd)
                             addLog("=== C++ Wrapper Session beendet (Exit-Code: $exitCode) ===", isError = exitCode != 0, isSuccess = exitCode == 0)
                             vmState = VMState.STOPPED
+                            stopVMService()
                         } catch (e: Exception) {
                             addLog("C++ Wrapper Error: ${e.message}", isError = true)
                             vmState = VMState.ERROR
+                            stopVMService()
                         }
                     }
                     vmState = VMState.RUNNING
@@ -618,6 +640,7 @@ fun AVFSimulatorApp(
                 if (processObj == null) {
                     addLog("Kritischer Fehler: Der Prozess konnte nicht instanziiert werden (System gab null zurück).", isError = true)
                     vmState = VMState.ERROR
+                    stopVMService()
                     return@launch
                 }
 
@@ -660,11 +683,13 @@ fun AVFSimulatorApp(
                     val exitCode = processObj.waitFor()
                     addLog("=== Virtuelle Maschine beendet (Exit-Code: $exitCode) ===", isError = exitCode != 0, isSuccess = exitCode == 0)
                     vmState = VMState.STOPPED
+                    stopVMService()
                 }
 
             } catch (e: Throwable) {
                 addLog("Systemfehler beim Starten des VM Prozesses via Shizuku: ${e.message}", isError = true)
                 vmState = VMState.ERROR
+                stopVMService()
             }
         }
     }
@@ -1560,6 +1585,7 @@ fun AVFSimulatorApp(
                                                 addLog("[kernel] flush: sync virtual disk maps")
                                                 addLog("[vmm] Virtual Machine destroyed gracefully.", isError = true)
                                                 vmState = VMState.STOPPED
+                                                stopVMService()
                                             }
                                         },
                                         enabled = vmState == VMState.RUNNING || vmState == VMState.BOOTING,
