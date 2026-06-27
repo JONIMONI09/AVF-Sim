@@ -133,6 +133,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Shizuku Status beim Zurueckkehren zur App aktualisieren
+        try {
+            if (checkShizukuActive()) {
+                // Hier koennte man ein UI Refresh triggern falls noetig
+            }
+        } catch (e: Throwable) {}
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         try {
