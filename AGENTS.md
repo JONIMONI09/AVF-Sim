@@ -1,20 +1,18 @@
-# AVF Simulator App (Remix)
-## Purpose
-This project is an advanced virtualization application for Android 16, utilizing Android Virtualization Framework (AVF/pKVM), QEMU, and PRoot (via a direct C++ JNI bridge) to run virtual machines natively or through emulation.
+# AVF Simulator Project Rules
 
-## Ownership
-- `app/AGENTS.md` -> Application source code, UI, and Android components.
+## Core Principles
+1. **Performance First**: Prioritize native JNI execution or AVF over slower emulated backends where possible.
+2. **Permission Handling**: Always check for Shizuku availability if standard framework calls fail.
+3. **Android 16 Compatibility**: Maintain Baklava-specific checks (`isAnyVmTypeSupported`).
+4. **Stability**: Always use `VMForegroundService` with a `WakeLock` for any binary execution to prevent Android's OOM killer.
 
-## Work Guidance
-- Follow Material Design 3 guidelines for the UI in Jetpack Compose.
-- Maintain fallback methods (QEMU/PRoot) for older Android versions or devices without AVF support.
-- Manage native speed execution directly via C++ syscall bindings in `app/src/main/cpp`. For PRoot, always maintain Podroid-style system bind mounts (`/dev`, `/sys`, `/proc`) to ensure compatibility with standard Linux binaries.
-- Environment variables for guest processes must include a standard Linux `PATH`, `TERM=xterm-256color`, and a valid `HOME` directory.
-- VM processes should be isolated and run asynchronously in a foreground service with a WakeLock to prevent system throttling.
+## Technical Standards
+- **JNI Bridge**: `native-lib.cpp` is the source of truth for `forkAndExec`. Environment variables and FD management are mandatory.
+- **Storage**: Never use `content://` URIs directly in shell commands. Use `StorageHelper` to localize files first.
+- **UI**: Jetpack Compose with Material Design 3. Ensure state hoisted to `MainActivity` or dedicated State objects.
+- **Diagnostics**: `DiagnosticHelper` must be updated whenever new capability checks are added.
 
 ## Verification
-- Run `gradle :app:assembleDebug` to verify.
-- Test both the Shizuku path and the direct PRoot/QEMU binary execution paths.
-
-## Child DOX Index
-- `app/AGENTS.md` - Rules and instructions for the core Android Application module.
+- `gradle :app:assembleDebug`
+- Manual verification of Shizuku binder connectivity.
+- Verification of Sparse Disk creation in `VirtualDisks` directory.
