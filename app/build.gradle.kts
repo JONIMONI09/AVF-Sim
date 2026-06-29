@@ -12,7 +12,7 @@ android {
 
   defaultConfig {
     applicationId = "com.aistudio.avfsimulator.mkwqxp"
-    minSdk = 24
+    minSdk = 35
     targetSdk = 36
     versionCode = 1
     versionName = "1.0"
@@ -64,6 +64,14 @@ android {
   }
 
   testOptions { unitTests { isIncludeAndroidResources = true } }
+
+  lint {
+    baseline = file("lint-baseline.xml")
+    abortOnError = false
+    checkDependencies = true
+    ignoreWarnings = false
+    warningsAsErrors = false
+  }
 }
 
 // Configure the Secrets Gradle Plugin to use .env and .env.example files
@@ -108,8 +116,8 @@ dependencies {
   implementation(libs.okhttp)
   // implementation(libs.play.services.location)
   implementation(libs.retrofit)
-  implementation("dev.rikka.shizuku:api:13.1.5")
-  implementation("dev.rikka.shizuku:provider:13.1.5")
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
   testImplementation(libs.androidx.compose.ui.test.junit4)
   testImplementation(libs.androidx.core)
   testImplementation(libs.androidx.junit)

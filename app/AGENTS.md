@@ -1,9 +1,9 @@
 # Android App Module Guidelines
 
 ## Module Structure
-- `com.example.StorageHelper`: Handles SAF localization and image management.
-- `com.example.DiagnosticHelper`: Core system capability detection.
-- `com.example.VMForegroundService`: Ensures long-running VM processes aren't killed.
+- `com.example.StorageHelper`: Handles SAF localization and image management using modern file paths (`context.filesDir`).
+- `com.example.DiagnosticHelper`: Core system capability detection including Android 16 pKVM checks.
+- `com.example.VMForegroundService`: Ensures long-running VM processes aren't killed (API 35+).
 - `native-lib.cpp`: C++ bridge for optimized process spawning.
 
 ## Podroid-Style Implementation Notes

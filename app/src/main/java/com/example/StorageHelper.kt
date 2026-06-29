@@ -25,7 +25,11 @@ object StorageHelper {
             
             inputStream?.use { input ->
                 outputStream.use { output ->
-                    input.copyTo(output)
+                    val buffer = ByteArray(1024 * 1024) // 1MB High-Performance Buffer
+                    var bytesRead: Int
+                    while (input.read(buffer).also { bytesRead = it } != -1) {
+                        output.write(buffer, 0, bytesRead)
+                    }
                 }
             }
             

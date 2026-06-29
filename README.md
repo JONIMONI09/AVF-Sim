@@ -1,47 +1,62 @@
 # AVF Simulator App (Baklava Edition)
 
-A high-performance Android virtualization suite designed for Android 13-16+. This application leverages the **Android Virtualization Framework (AVF/pKVM)**, **QEMU**, and an optimized **PRoot Engine** to provide a seamless Linux execution environment on mobile hardware.
+[![Android 16](https://img.shields.io/badge/Android-16%20%22Baklava%22-green.svg)](https://developer.android.com/about/versions/16)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Architecture: AArch64](https://img.shields.io/badge/Architecture-ARM64%20%2F%20AArch64-orange.svg)](#architecture)
 
-## 🚀 Key Features
+A professional-grade, high-performance virtualization manager for Android 13-16+. This suite provides a unified interface for the **Android Virtualization Framework (AVF/pKVM)**, **QEMU**, and a Podroid-optimized **PRoot Engine**.
 
-- **Android 16 "Baklava" Ready**: Fully optimized for the latest pKVM capabilities, including `isAnyVmTypeSupported` checks and enhanced permission handling for custom VM types.
-- **Hardware-Accelerated Virtualization**: Near-native performance using `/dev/kvm` and the official `VirtualMachineManager` API.
-- **Podroid-Style PRoot Optimization**: 
-    - Static PRoot engine with direct C++ JNI bridge.
-    - Optimized bind mounts: `/dev`, `/proc`, `/sys`, `/dev/shm`.
-    - Injection of critical environment variables (`PATH`, `TERM`, `HOME`).
-- **Sparse Disk Management**:
-    - Instant creation of virtual disk images (up to 100GB).
-    - Sparsely allocated files save physical storage space while providing large guest capacity.
-- **SAF Localization Engine**:
-    - Bridges the gap between Android's Storage Access Framework (SAF) and native binaries.
-    - Automatic localization of `content://` URIs to local `VirtualDisks` storage for QEMU/crosvm compatibility.
-- **Robust Shizuku Integration**:
-    - Automated binder acquisition and permission granting via reflection.
-    - Essential for `MANAGE_VIRTUAL_MACHINE` permissions on non-rooted devices.
-- **Foreground Service Persistence**: Uses Partial WakeLocks and Foreground Services to ensure VM stability during long-running background tasks.
-- **Integrated Terminal & Display**: Embedded Xterm-compatible terminal and noVNC graphical viewer.
+## 🚀 High-Performance Core
+
+This "Remix" version incorporates several "intelligent" optimizations to bypass standard Android bottlenecks:
+
+- **Ultra-Fast Storage Engine**: `StorageHelper.kt` utilizes a **1MB high-performance buffer** for SAF localization, enabling rapid transfers of multi-gigabyte ISO and Disk images.
+- **Native JNI Isolation (C++)**: The `native-lib.cpp` bridge implements `prctl(PR_SET_PDEATHSIG, SIGTERM)`, ensuring that virtual machine processes are automatically cleaned up if the host application terminates, preventing "zombie" VMs.
+- **Sparse Disk Generation**: Instantly create virtual disks (up to 100GB) that only occupy the actual space used on the physical storage.
+- **Android 16 "Baklava" Ready**: Native support for API 36 capabilities, including granular pKVM capability detection (`isAnyVmTypeSupported`).
 
 ## 🛠 Architecture
 
-The app dynamically selects the best available backend based on device capabilities:
+```mermaid
+graph TD
+    UI[Jetpack Compose UI] --> State[Main State Engine]
+    State --> JNI[Native JNI Bridge - forkAndExec]
+    State --> AVF[Android Virtualization Manager]
+    State --> Shizuku[Shizuku Shell Bridge]
+    
+    JNI --> PRoot[Static PRoot Engine]
+    AVF --> pKVM[Hardware pKVM / Crosvm]
+    Shizuku --> Privileged[Privileged System Calls]
+    
+    subgraph Storage
+        SAF[Storage Access Framework] --> Localization[1MB Buffer Localization]
+        Localization --> Internal[App-Internal VirtualDisks]
+    end
+```
 
-1.  **AVF (Native)**: Utilizing `VirtualMachineManager` for hardware-backed security and performance.
-2.  **Crosvm Bypass**: Direct interaction with `/dev/kvm` where framework restrictions allow.
-3.  **PRoot (Static)**: Native emulation for unrooted devices, providing a high-speed Linux environment without a full kernel overhead.
-4.  **QEMU**: Full system emulation for maximum compatibility with various architectures and legacy images.
+## 📋 Features
 
-## 📦 Installation & Setup
+- **pKVM Acceleration**: Hardware-backed virtualization with near-native performance.
+- **Podroid-Style PRoot**: Direct CPU execution with optimized bind mounts (`/dev`, `/proc`, `/sys`) for Linux binaries.
+- **Integrated Display**: Embedded noVNC viewer for graphical guest OS interaction.
+- **Smart Shizuku Logic**: Automated binder acquisition and reflection-based permission granting.
+- **WakeLock Persistence**: Foreground service with Partial WakeLocks to prevent Android's OOM killer from terminating active VMs.
 
-1. **System Check**: Use the 'Status & KVM' tab to verify pKVM availability.
-2. **Shizuku Setup**: Highly recommended for non-root users. Install the Shizuku app and pair it to enable extended VM permissions.
-3. **Storage Allocation**: Use the 'Image-Management' section to create a Sparse Disk or import an existing `.qcow2` or `.img` via SAF.
-4. **Boot**: Configure your VM profile and start the session. Monitor progress via the integrated Terminal logs.
+## ⚠️ Troubleshooting for Developers
+
+### Git "Fork Error" / Askpass Failure
+If you encounter `dofork: child -1 ... exit code 0xC0000142` or `unable to read askpass response` during git operations in Android Studio/Windows:
+1.  **Switch Credential Helper**: Run `git config --global credential.helper store`.
+2.  **Reset Environment**: Clear `GIT_ASKPASS` and `SSH_ASKPASS` environment variables in your terminal.
+3.  **Process Cleanup**: Kill all orphan `git.exe` and `sh.exe` processes via Task Manager.
+
+### AVF Permission Denied
+Ensure you have authorized the app via **Shizuku**. If `MANAGE_VIRTUAL_MACHINE` is missing, use the "KVM Rechte erteilen" button in the Status tab to trigger the Shizuku shell.
 
 ## 📄 Documentation
 
-- [AGENTS.md](AGENTS.md): Technical guidelines and project rules for automated agents.
-- [Diagnostic Guide](app/src/main/java/com/example/DiagnosticHelper.kt): Details on capability detection logic.
+- [AGENTS.md](AGENTS.md): Core principles and technical standards for the project.
+- [Diagnostic Guide](app/src/main/java/com/example/DiagnosticHelper.kt): Implementation details of the capability engine.
 
 ---
-*Developed for advanced virtualization enthusiasts on the Android platform.*
+*Optimized for the next generation of mobile computing.*

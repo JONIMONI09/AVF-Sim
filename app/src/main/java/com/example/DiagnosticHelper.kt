@@ -20,6 +20,7 @@ object DiagnosticHelper {
         // File checks
         val apexPresent = File("/apex/com.android.virt").exists()
         val devKvm = File("/dev/kvm").exists()
+        val virtioGpu = File("/sys/module/virtio_gpu").exists() || File("/sys/bus/virtio/drivers/virtio_gpu").exists()
         
         val featureSupport = pm.hasSystemFeature("android.software.virtualization_framework")
         val managePerm = context.checkSelfPermission("android.permission.MANAGE_VIRTUAL_MACHINE") == PackageManager.PERMISSION_GRANTED
@@ -89,6 +90,10 @@ object DiagnosticHelper {
 
             Active backend
               $backend
+
+            VirtIO Hardware Support
+              GPU Acceleration = $virtioGpu
+              KVM Node (/dev/kvm) = $devKvm
 
             Feature: virtualization_framework
               supported = $featureSupport

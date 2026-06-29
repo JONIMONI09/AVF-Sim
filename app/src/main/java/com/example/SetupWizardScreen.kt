@@ -1,11 +1,11 @@
 package com.example
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -50,7 +50,7 @@ fun SetupWizardScreen(
     var showAnalysis by remember { mutableStateOf(false) }
 
     // States for Permissions
-    var hasNotifications by remember { mutableStateOf(Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) }
+    var hasNotifications by remember { mutableStateOf(false) }
     var hasStorage by remember { mutableStateOf(false) }
     var hasBattery by remember { mutableStateOf(false) }
 
@@ -65,30 +65,20 @@ fun SetupWizardScreen(
     val notificationLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        hasNotifications = granted || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
+        hasNotifications = granted
     }
 
     val batteryLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {
+    ) { _ ->
         val pm = context.getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager
         hasBattery = pm?.isIgnoringBatteryOptimizations(context.packageName) ?: false
     }
 
     val storageLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            hasStorage = Environment.isExternalStorageManager()
-        } else {
-            hasStorage = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        }
-    }
-
-    val legacyStorageLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        hasStorage = granted
+    ) { _ ->
+        hasStorage = Environment.isExternalStorageManager()
     }
 
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
@@ -96,14 +86,8 @@ fun SetupWizardScreen(
     DisposableEffect(lifecycleOwner) {
         val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
             if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    hasNotifications = context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    hasStorage = Environment.isExternalStorageManager()
-                } else {
-                    hasStorage = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                }
+                hasNotifications = context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+                hasStorage = Environment.isExternalStorageManager()
                 val pm = context.getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager
                 hasBattery = pm?.isIgnoringBatteryOptimizations(context.packageName) ?: false
             }
@@ -116,14 +100,8 @@ fun SetupWizardScreen(
 
     // Refresh states on load
     LaunchedEffect(Unit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            hasNotifications = context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            hasStorage = Environment.isExternalStorageManager()
-        } else {
-            hasStorage = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        }
+        hasNotifications = context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        hasStorage = Environment.isExternalStorageManager()
         val pm = context.getSystemService(Context.POWER_SERVICE) as? android.os.PowerManager
         hasBattery = pm?.isIgnoringBatteryOptimizations(context.packageName) ?: false
     }
@@ -151,14 +129,12 @@ fun SetupWizardScreen(
 
         if (showPermissions) {
             // Notifications
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                PermissionItem(
-                    title = "Benachrichtigungen",
-                    description = "Halte die VM am Leben mit einer Foreground-Benachrichtigung.",
-                    isGranted = hasNotifications,
-                    onRequest = { notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) }
-                )
-            }
+            PermissionItem(
+                title = "Benachrichtigungen",
+                description = "Halte die VM am Leben mit einer Foreground-Benachrichtigung.",
+                isGranted = hasNotifications,
+                onRequest = { notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) }
+            )
 
             // Storage
             PermissionItem(
@@ -166,22 +142,19 @@ fun SetupWizardScreen(
                 description = "Notwendig um ISO/RAW Images zu lesen und zu schreiben.",
                 isGranted = hasStorage,
                 onRequest = {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        try {
-                            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                            intent.data = Uri.parse("package:${context.packageName}")
-                            storageLauncher.launch(intent)
-                        } catch (e: Exception) {
-                            val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
-                            storageLauncher.launch(intent)
-                        }
-                    } else {
-                        legacyStorageLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    try {
+                        val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                        intent.data = Uri.parse("package:${context.packageName}")
+                        storageLauncher.launch(intent)
+                    } catch (_: Exception) {
+                        val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                        storageLauncher.launch(intent)
                     }
                 }
             )
 
             // Battery
+            @SuppressLint("BatteryLife")
             PermissionItem(
                 title = "Akku-Optimierungen ignorieren",
                 description = "Erlaubt der VM mit voller CPU-Leistung dauerhaft im Hintergrund zu laufen.",
@@ -224,7 +197,7 @@ fun SetupWizardScreen(
                                 )
                                 paths.any { File(it).exists() }
                             }
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             false
                         }
                         isRootActive = rootObj
@@ -320,26 +293,6 @@ fun PermissionItem(title: String, description: String, isGranted: Boolean, onReq
                     Text("Erlauben")
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun AnalysisItem(title: String, result: Boolean?) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(title, fontWeight = FontWeight.Medium)
-        when (result) {
-            null -> CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
-            true -> Icon(Icons.Default.CheckCircle, contentDescription = "Vorhanden", tint = Color(0xFF4CAF50))
-            false -> Icon(Icons.Default.Warning, contentDescription = "Fehlt", tint = Color(0xFFF44336))
         }
     }
 }

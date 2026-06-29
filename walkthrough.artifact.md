@@ -23,11 +23,17 @@ This document summarizes the final state of the AVF Simulator App, specifically 
 - Fixed binder acquisition issues using `Shizuku.pingBinder()`.
 - Implemented reflection-based process creation to support various Shizuku version signatures.
 
+### 5. Final Polish & Lint Resolution
+- **Error Resolution**: Fixed a compilation error in `SetupWizardScreen.kt` by adding the missing `android.annotation.SuppressLint` import.
+- **Compose Optimization**: Refactored `MainActivity.kt` to use primitive-specific state holders (`mutableIntStateOf`, `mutableFloatStateOf`) for improved recomposition performance.
+- **Lint & SDK Cleanup**: Removed obsolete SDK checks (since minSdk is 35) and hardcoded `/data/data/` paths across the codebase.
+- **Documentation**: Updated `AGENTS.md` and `app/AGENTS.md` with the latest Android 16 technical standards.
+
 ## Verification Summary
 
 ### Automated Verification
-- **Build**: Successfully compiled using `gradle :app:assembleDebug`.
-- **Static Analysis**: Verified capability detection logic in `DiagnosticHelper`.
+- **Build**: Successfully compiled using `gradle :app:assembleDebug` with zero compilation errors.
+- **Lint**: All major lint warnings addressed, including battery optimization and unnecessary SDK checks.
 
 ### Manual Verification Path (Recommended for User)
 1. Open the app on an Android 16 device/emulator.

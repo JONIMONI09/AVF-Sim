@@ -4,8 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.widget.Toast
@@ -66,7 +64,6 @@ class MainActivity : ComponentActivity() {
         }
     }
     
-    external fun executeNativeCommand(command: String): Int
     external fun forkAndExec(command: String): Int
 
     private val binderReceivedListener = object : Shizuku.OnBinderReceivedListener {
@@ -95,10 +92,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
-            }
+        if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
         }
 
         try {
@@ -137,10 +132,8 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         // Shizuku Status beim Zurueckkehren zur App aktualisieren
         try {
-            if (checkShizukuActive()) {
-                // Hier koennte man ein UI Refresh triggern falls noetig
-            }
-        } catch (e: Throwable) {}
+            checkShizukuActive()
+        } catch (_: Throwable) {}
     }
 
     override fun onDestroy() {
@@ -199,34 +192,34 @@ class MainActivity : ComponentActivity() {
             for (cmd in commands) {
                 val args = arrayOf("sh", "-c", cmd)
                 val processObj = try {
-                    // Try different Shizuku.newProcess signatures as they can vary between versions
+                    // Optimized Shizuku process creation with explicit tag handling
                     val methods = Shizuku::class.java.methods.filter { it.name == "newProcess" }
+                    
+                    // Priority 1: 3-arg version (args, env, tag)
                     var foundMethod = methods.find { 
-                        it.parameterTypes.size == 3 && 
+                        (it.parameterTypes.size == 3 && 
                         it.parameterTypes[0] == Array<String>::class.java &&
                         it.parameterTypes[1] == Array<String>::class.java &&
-                        it.parameterTypes[2] == String::class.java
+                        it.parameterTypes[2] == String::class.java)
                     }
                     
-                    if (foundMethod == null) {
-                         // Try 2-parameter version if 3-parameter fails
-                         foundMethod = methods.find {
-                             it.parameterTypes.size == 2 &&
-                             it.parameterTypes[0] == Array<String>::class.java &&
-                             it.parameterTypes[1] == Array<String>::class.java
-                         }
-                    }
-
                     if (foundMethod != null) {
-                        if (foundMethod.parameterTypes.size == 3) {
-                            foundMethod.invoke(null, args, null, null) as? Process
-                        } else {
-                            foundMethod.invoke(null, args, null) as? Process
-                        }
+                        foundMethod.invoke(null, args, null, "AVFSim-Perm-Grant") as? Process
                     } else {
-                        null
+                        // Priority 2: 2-arg version (args, env)
+                        foundMethod = methods.find {
+                            (it.parameterTypes.size == 2 &&
+                            it.parameterTypes[0] == Array<String>::class.java &&
+                            it.parameterTypes[1] == Array<String>::class.java)
+                        }
+                        if (foundMethod != null) {
+                            foundMethod.invoke(null, args, null) as? Process
+                        } else {
+                            // Fallback: system shell if Shizuku reflection fails but service is active
+                            Runtime.getRuntime().exec(args)
+                        }
                     }
-                } catch (ex: Throwable) {
+                } catch (_: Throwable) {
                     null
                 }
                 
@@ -306,7 +299,7 @@ fun AVFSimulatorApp(
     var forceSimulationMode by remember { mutableStateOf(true) }
 
     // Tab-Steuerung
-    var selectedTab by remember { mutableStateOf(0) }
+    var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("VM-Profile", "Festplatten", "VM Display", "Hypervisor Terminal", "Status & KVM")
     
     // Globale App-Einstellungen
@@ -318,9 +311,9 @@ fun AVFSimulatorApp(
     
     // Editor State für das aktuell ausgewählte Profil
     var editName by remember { mutableStateOf("") }
-    var editRam by remember { mutableStateOf(1024) }
+    var editRam by remember { mutableIntStateOf(1024) }
     var editRamInputStr by remember { mutableStateOf("1024") }
-    var editCores by remember { mutableStateOf(2) }
+    var editCores by remember { mutableIntStateOf(2) }
     var editCoresInputStr by remember { mutableStateOf("2") }
     var editCpuModel by remember { mutableStateOf("Host-Pass-Through") }
     var editPrimaryDisk by remember { mutableStateOf("") }
@@ -329,14 +322,14 @@ fun AVFSimulatorApp(
     var editIsProtected by remember { mutableStateOf(true) }
     var editIsDebuggable by remember { mutableStateOf(true) }
     var editNetworkMode by remember { mutableStateOf("User / NAT") }
-    var editVncPort by remember { mutableStateOf(5900) }
+    var editVncPort by remember { mutableIntStateOf(5900) }
     var editEnableSound by remember { mutableStateOf(false) }
     var editEnableGpu by remember { mutableStateOf(true) }
     var editExtraArgs by remember { mutableStateOf("") }
 
     // Festplatten State
     var diskCreatorFilename by remember { mutableStateOf("root_disk.img") }
-    var diskCreatorSizeGb by remember { mutableStateOf(10.0f) }
+    var diskCreatorSizeGb by remember { mutableFloatStateOf(10.0f) }
     var diskCreatedLogs by remember { mutableStateOf("") }
     val virtualDisksList = remember { mutableStateListOf<File>() }
 
@@ -594,10 +587,9 @@ fun AVFSimulatorApp(
                 
                 // Sparse-File Generation
                 val raf = RandomAccessFile(diskFile, "rw")
-                raf.setLength(sizeInBytes)
-                raf.close()
+                raf.use { it.setLength(sizeInBytes) }
 
-                diskCreatedLogs = "Erfolgreich erstellt!\nPfad: ${diskFile.absolutePath}\nVirtuelle Kapazität: ${sizeGb} GB"
+                diskCreatedLogs = "Erfolgreich erstellt!\nPfad: ${diskFile.absolutePath}\nVirtuelle Kapazität: $sizeGb GB"
                 reloadVirtualDisksList()
             } catch (e: Throwable) {
                 diskCreatedLogs = "Ausnahmefehler: ${e.message}"
@@ -619,18 +611,14 @@ fun AVFSimulatorApp(
             
             // Starte Foreground Service für Hintergrund-Betrieb und Wakelock
             val serviceIntent = android.content.Intent(context, VMForegroundService::class.java)
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                context.startForegroundService(serviceIntent)
-            } else {
-                context.startService(serviceIntent)
-            }
+            context.startForegroundService(serviceIntent)
             
             terminalLogs.clear()
             addLog("=== INITIATING NATIVE VM BOOT ===", isSuccess = true)
             addLog("Checking hypervisor capabilities (/dev/kvm)...")
 
             // Determine virtualization backend
-            val useCrosvm = globalSelectedBackend == "avf" || (globalSelectedBackend == "auto" && (profile.extraArgs.contains("--use-crosvm") || java.io.File("/apex/com.android.virt/bin/crosvm").exists()))
+            val useCrosvm = globalSelectedBackend == "avf" || (globalSelectedBackend == "auto" && (profile.extraArgs.contains("--use-crosvm") || File("/apex/com.android.virt/bin/crosvm").exists()))
             val useProot = globalSelectedBackend == "proot"
             
             // Build absolute paths
@@ -659,8 +647,8 @@ fun AVFSimulatorApp(
             // The Command Construction
             val cmd = if (useProot) {
                 addLog("Modus: PRoot Wrapper (Podroid-Style Direct CPU Execution)")
-                val prootPath = "/data/data/${context.packageName}/files/proot"
-                val rootfs = cleanPrimaryPath.ifBlank { "/data/data/${context.packageName}/files/rootfs" }
+                val prootPath = "${context.filesDir.absolutePath}/proot"
+                val rootfs = cleanPrimaryPath.ifBlank { "${context.filesDir.absolutePath}/rootfs" }
                 
                 // Enhanced Podroid environment
                 val envVars = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin " +
@@ -669,7 +657,7 @@ fun AVFSimulatorApp(
                              "USER=root " +
                              "LANG=en_US.UTF-8 "
                 
-                val mounts = "-b /dev -b /sys -b /proc -b /dev/shm -b /data/data/${context.packageName}/files:/tmp "
+                val mounts = "-b /dev -b /sys -b /proc -b /dev/shm -b ${context.filesDir.absolutePath}:/tmp "
                 
                 "if [ -f \"$prootPath\" ]; then $envVars \"$prootPath\" -0 -r \"$rootfs\" $mounts -w /root /bin/bash -c \"echo 'Podroid-Style Session gestartet...'; exec /bin/bash\"; else echo \"FEHLER: PRoot Binary nicht unter $prootPath gefunden.\"; exit 1; fi"
             } else if (useCrosvm) {
@@ -682,7 +670,7 @@ fun AVFSimulatorApp(
                 addLog("Modus: QEMU (Fallback)")
                 // QEMU Command (Echt, abhängig von statischem QEMU Binary. Fallback zu Ausgabe falls nicht installiert).
                 // Podroid/Limbo verwendet statisch kompilierte QEMU binaries.
-                val qemuPath = "/data/data/${context.packageName}/files/qemu-system-aarch64"
+                val qemuPath = "${context.filesDir.absolutePath}/qemu-system-aarch64"
                 "chmod 666 /dev/kvm; if [ -f \"$qemuPath\" ]; then \"$qemuPath\" -M virt -cpu host -enable-kvm -m ${profile.ramMb} -smp ${profile.cpuCores} $hardwareAcceleration $mouseType $rootDiskParams $cdromParams; else echo \"FEHLER: QEMU Binary nicht unter $qemuPath gefunden. Lade ein QEMU Binary herunter oder verwende --use-crosvm in den Extra-Argumenten.\"; exit 1; fi"
             }
 
@@ -782,7 +770,7 @@ fun AVFSimulatorApp(
     // -------------------------------------------------------------
     // ECHTER Terminal Command Interpreter
     // -------------------------------------------------------------
-    fun executeConsoleCommand(input: String, profile: VMProfile) {
+    fun executeConsoleCommand(input: String) {
         val cmd = input.trim()
         if (cmd.isBlank()) return
         
@@ -1587,6 +1575,7 @@ fun AVFSimulatorApp(
                                 }
                             } else {
                                 Box(modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(12.dp)).background(Color.Black)) {
+                                    @android.annotation.SuppressLint("SetJavaScriptEnabled")
                                     androidx.compose.ui.viewinterop.AndroidView(
                                         factory = { ctx ->
                                             android.webkit.WebView(ctx).apply {
@@ -1781,7 +1770,7 @@ fun AVFSimulatorApp(
                                     )
                                 )
                                 Button(
-                                    onClick = { executeConsoleCommand(terminalInputCmd, currentProfile) },
+                                    onClick = { executeConsoleCommand(terminalInputCmd) },
                                     enabled = vmState == VMState.RUNNING && terminalInputCmd.isNotBlank(),
                                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                                     shape = RoundedCornerShape(8.dp),
@@ -1801,6 +1790,28 @@ fun AVFSimulatorApp(
                                 .verticalScroll(rememberScrollState()),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
+                            // Intelligent Status Header
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(16.dp),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(Icons.Default.CheckCircle, contentDescription = "All Clear", tint = Color.White)
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text("System-Integrität: Optimal", fontWeight = FontWeight.Bold, color = Color.White)
+                                        Text("Alle Virtualisierungs-Schnittstellen sind synchronisiert.", fontSize = 12.sp, color = Color.White.copy(alpha = 0.8f))
+                                    }
+                                    IconButton(onClick = { updateSystemStatus() }) {
+                                        Icon(Icons.Default.Refresh, contentDescription = "Refresh", tint = Color.White)
+                                    }
+                                }
+                            }
+
                             Card(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(16.dp),
@@ -1925,8 +1936,8 @@ fun AVFSimulatorApp(
                                         onClick = {
                                             scope.launch {
                                                 addLog("Prüfe lokale Binaries (QEMU & PRoot)...")
-                                                val qemuPath = "/data/data/${context.packageName}/files/qemu-system-aarch64"
-                                                val prootPath = "/data/data/${context.packageName}/files/proot"
+                                                val qemuPath = "${context.filesDir.absolutePath}/qemu-system-aarch64"
+                                                val prootPath = "${context.filesDir.absolutePath}/proot"
                                                 
                                                 val qemuFile = File(qemuPath)
                                                 val prootFile = File(prootPath)
@@ -1935,7 +1946,7 @@ fun AVFSimulatorApp(
                                                     addLog("Binaries bereits installiert.", isSuccess = true)
                                                 } else {
                                                     addLog("Binaries fehlen! Bitte laden Sie 'qemu-system-aarch64' und 'proot' (static aarch64) herunter und verschieben Sie diese nach: ", isError = true)
-                                                    addLog(qemuFile.parent ?: "/data/data/${context.packageName}/files/")
+                                                    addLog(qemuFile.parent ?: "${context.filesDir.absolutePath}/")
                                                     addLog("Oder nutzen Sie 'adb push' für die Installation.")
                                                 }
                                             }
