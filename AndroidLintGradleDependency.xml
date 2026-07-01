@@ -1,0 +1,15 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>12</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="AndroidLintGradleDependency" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Obsolete Gradle Dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;A newer version of androidx.compose:compose-bom than 2024.09.00 is available: 2026.06.01&lt;/html&gt;</description>
+  <highlighted_element>&quot;2024.09.00&quot;</highlighted_element>
+  <language>TOML</language>
+  <offset>13</offset>
+  <length>12</length>
+</problem>
+</problems>

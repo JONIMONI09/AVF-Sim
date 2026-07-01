@@ -1,0 +1,132 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/DownloadHelper.kt</file>
+  <line>11</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/DownloadHelper.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import java.net.URL</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>19</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>8</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import android.provider.OpenableColumns</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>39</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>15</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.animation.*</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>35</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>18</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.foundation.clickable</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>44</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>13</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.animation.*</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>35</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>14</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.foundation.background</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>45</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>16</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.foundation.lazy.LazyColumn</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>50</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>21</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.material.icons.filled.Warning</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>53</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>22</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.material.icons.filled.Info</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>50</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>29</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt" />
+  <problem_class id="KotlinUnusedImport" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Import-Anweisung</problem_class>
+  <description>Nicht verwendete Import-Anweisung</description>
+  <highlighted_element>import androidx.compose.ui.draw.clip</highlighted_element>
+  <language>kotlin</language>
+  <offset>0</offset>
+  <length>36</length>
+</problem>
+</problems>

@@ -1,0 +1,15 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/VMForegroundService.kt</file>
+  <line>19</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.VMForegroundService void onCreate()" />
+  <problem_class id="RemoveRedundantQualifierName" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Redundanter Qualifizierer-Name</problem_class>
+  <description>Redundanten Qualifizierernamen entfernen</description>
+  <highlighted_element>Context</highlighted_element>
+  <language>kotlin</language>
+  <offset>44</offset>
+  <length>7</length>
+</problem>
+</problems>

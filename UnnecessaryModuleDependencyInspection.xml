@@ -1,0 +1,14 @@
+<problems>
+<problem>
+  <file>My_Application.app.androidTest</file>
+  <module>My_Application.app.androidTest</module>
+  <entry_point TYPE="module" FQNAME="My_Application.app.androidTest" />
+  <problem_class id="UnnecessaryModuleDependencyInspection" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Überflüssige Modulabhängigkeit</problem_class>
+  <hints>
+    <hint value="My_Application.app.main" />
+  </hints>
+  <description>Quellen von Modul 'My_Application.app.androidTest' hängen nicht von Quellen von Modul 'My_Application.app.main' ab</description>
+  <highlighted_element />
+  <language />
+</problem>
+</problems>

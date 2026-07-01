@@ -53,7 +53,6 @@ import java.util.*
 class MainActivity : ComponentActivity() {
 
     private val shizukuRequestCode = 1421
-    private var activeProcess: Process? = null
     
     companion object {
         init {
@@ -229,6 +228,10 @@ enum class OSImage(val displayName: String, val kernelName: String, val download
 
 enum class VMState {
     STOPPED, BOOTING, RUNNING, ERROR
+}
+
+object VMManager {
+    var activeProcess: Process? = null
 }
 
 // Log-Eintrag Datenstruktur
@@ -579,11 +582,9 @@ fun AVFSimulatorApp(
         }
     }
 
-    private var activeProcess: Process? = null
-
     fun stopVMService() {
-        activeProcess?.destroy()
-        activeProcess = null
+        VMManager.activeProcess?.destroy()
+        VMManager.activeProcess = null
         val serviceIntent = android.content.Intent(context, VMForegroundService::class.java)
         context.stopService(serviceIntent)
     }
@@ -698,6 +699,8 @@ fun AVFSimulatorApp(
                 } else {
                     Runtime.getRuntime().exec(arrayOf("sh", "-c", cmd))
                 }
+
+                VMManager.activeProcess = processObj
 
                 if (processObj == null) {
                     addLog("Kritischer Fehler: Der Prozess konnte nicht instanziiert werden (System gab null zurück).", isError = true)

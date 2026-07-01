@@ -1,0 +1,14 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/assets/novnc.html</file>
+  <line>2</line>
+  <module>My_Application.app.main</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/assets/novnc.html" />
+  <problem_class id="HtmlRequiredLangAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Erforderliches 'lang'-Attribut fehlt</problem_class>
+  <description>Erforderliches 'lang'-Attribut fehlt</description>
+  <highlighted_element>html</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>4</length>
+</problem>
+</problems>

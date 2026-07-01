@@ -1,0 +1,190 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="AndroidLintActivityIconColor" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintAllCaps" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintAlwaysShowAction" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintAutofill" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintBackButton" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintButtonCase" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintButtonOrder" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintButtonStyle" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintConvertToWebp" enabled="true" level="ERROR" enabled_by_default="false" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintDuplicateStrings" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="AndroidLintExpensiveAssertion" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="AndroidLintGifUsage" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconColors" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconDensities" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconDipSize" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconDuplicates" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconDuplicatesConfig" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconExpectedSize" enabled="true" level="ERROR" enabled_by_default="false" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconExtension" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconLauncherShape" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconLocation" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconMissingDensityFolder" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconMixedNinePatch" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconNoDpi" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintIconXmlAndPng" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintMenuTitle" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintMipmapIcons" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintMissingApplicationIcon" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintMonochromeLauncherIcon" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintNegativeMargin" enabled="true" level="ERROR" enabled_by_default="false" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintReportShortcutUsage" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WEAK WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintSelectableText" enabled="true" level="ERROR" enabled_by_default="false" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintSmallSp" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintSquareAndRoundTilePreviews" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintTextFields" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintTilePreviewImageFormat" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintTypographyDashes" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintTypographyEllipsis" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintTypographyFractions" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintTypographyOther" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintTypographyQuotes" enabled="true" level="ERROR" enabled_by_default="false" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintUnnecessaryRequiredFeature" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintViewConstructor" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintWearBackNavigation" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintWearPasswordInput" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintWearRecents" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintWearSplashScreen" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="WARNING" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="AndroidLintWebpUnsupported" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="ComposePreviewDimensionRespectsLimit" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="ComposePreviewMustBeTopLevelFunction" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="ComposePreviewNeedsComposableAnnotation" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="ComposePreviewNotSupportedInUnitTestFiles" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="GlancePreviewDimensionRespectsLimit" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="GlancePreviewMustBeTopLevelFunction" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="GlancePreviewNeedsComposableAnnotation" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="GlancePreviewNotSupportedInUnitTestFiles" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PreviewAnnotationInFunctionWithParameters" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PreviewApiLevelMustBeValid" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PreviewDeviceShouldUseNewSpec" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PreviewFontScaleMustBeGreaterThanZero" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PreviewMultipleParameterProviders" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PreviewParameterProviderOnFirstParameter" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PreviewPickerAnnotation" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="composableFile" value="true" />
+    </inspection_tool>
+  </profile>
+</component>

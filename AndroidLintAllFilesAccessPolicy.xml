@@ -1,0 +1,15 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml</file>
+  <line>12</line>
+  <module>My_Application.app.main</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+  <problem_class id="AndroidLintAllFilesAccessPolicy" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">All Files Access Insights</problem_class>
+  <hints />
+  <description>&lt;html&gt;To protect user data, &lt;code&gt;MANAGE_EXTERNAL_STORAGE&lt;/code&gt; requires essential core functionality and Google Play’s approval.&lt;/html&gt;</description>
+  <highlighted_element>android:name=&quot;android.permission.MANAGE_EXTERNAL_STORAGE&quot;</highlighted_element>
+  <language>XML</language>
+  <offset>21</offset>
+  <length>57</length>
+</problem>
+</problems>

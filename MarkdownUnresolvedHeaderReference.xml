@@ -1,0 +1,14 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/README.md</file>
+  <line>5</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Nicht aufgelöster Überschriftenverweis</problem_class>
+  <description>Anker architecture kann nicht aufgelöst werden</description>
+  <highlighted_element>architecture</highlighted_element>
+  <language>Markdown</language>
+  <offset>104</offset>
+  <length>12</length>
+</problem>
+</problems>

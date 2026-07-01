@@ -1,0 +1,119 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>560</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.MainActivityKt void AVFSimulatorApp(androidx.compose.ui.Modifier modifier, java.lang.String packageName, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onGrantShizukuPermissions, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onRequestShizukuAuth)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(200)</highlighted_element>
+  <language>kotlin</language>
+  <offset>16</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>668</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.MainActivityKt void AVFSimulatorApp(androidx.compose.ui.Modifier modifier, java.lang.String packageName, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onGrantShizukuPermissions, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onRequestShizukuAuth)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(500)</highlighted_element>
+  <language>kotlin</language>
+  <offset>12</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>1693</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.MainActivityKt void AVFSimulatorApp(androidx.compose.ui.Modifier modifier, java.lang.String packageName, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onGrantShizukuPermissions, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onRequestShizukuAuth)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(400)</highlighted_element>
+  <language>kotlin</language>
+  <offset>48</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>176</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.SetupWizardScreenKt void SetupWizardScreen(kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onSetupComplete, androidx.compose.ui.Modifier modifier)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(500)</highlighted_element>
+  <language>kotlin</language>
+  <offset>24</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>178</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.SetupWizardScreenKt void SetupWizardScreen(kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onSetupComplete, androidx.compose.ui.Modifier modifier)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(400)</highlighted_element>
+  <language>kotlin</language>
+  <offset>24</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>180</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.SetupWizardScreenKt void SetupWizardScreen(kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onSetupComplete, androidx.compose.ui.Modifier modifier)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(600)</highlighted_element>
+  <language>kotlin</language>
+  <offset>24</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>182</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.SetupWizardScreenKt void SetupWizardScreen(kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onSetupComplete, androidx.compose.ui.Modifier modifier)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(300)</highlighted_element>
+  <language>kotlin</language>
+  <offset>24</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>187</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.SetupWizardScreenKt void SetupWizardScreen(kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onSetupComplete, androidx.compose.ui.Modifier modifier)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>withTimeoutOrNull(300) { process.waitFor() ...</highlighted_element>
+  <language>kotlin</language>
+  <offset>61</offset>
+  <length>104</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/SetupWizardScreen.kt</file>
+  <line>205</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.SetupWizardScreenKt void SetupWizardScreen(kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onSetupComplete, androidx.compose.ui.Modifier modifier)" />
+  <problem_class id="ConvertLongToDuration" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Konvertierung von Long-Überladung zu Duration</problem_class>
+  <description>Veraltete Long-Überladung kann in Duration konvertiert werden</description>
+  <highlighted_element>delay(500)</highlighted_element>
+  <language>kotlin</language>
+  <offset>24</offset>
+  <length>10</length>
+</problem>
+</problems>

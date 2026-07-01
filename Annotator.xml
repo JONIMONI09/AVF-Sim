@@ -1,0 +1,15 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/download.gradle</file>
+  <line>3</line>
+  <module>My_Application.app</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/download.gradle" />
+  <problem_class id="Annotator" severity="ERROR" attribute_key="WRONG_REFERENCES_ATTRIBUTES">Annotator</problem_class>
+  <hints />
+  <description>Symbol 'val' kann nicht aufgelöst werden #loc</description>
+  <highlighted_element>val</highlighted_element>
+  <language>Groovy</language>
+  <offset>8</offset>
+  <length>3</length>
+</problem>
+</problems>

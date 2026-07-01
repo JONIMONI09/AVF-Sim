@@ -23,6 +23,8 @@ object DownloadHelper {
         fileName: String,
         onProgress: (Float) -> Unit = {}
     ): File? = withContext(Dispatchers.IO) {
+        // Sanitize filename
+        val sanitizedFileName = fileName.replace("..", "").replace("/", "")
         try {
             val request = Request.Builder().url(url).build()
             val response = client.newCall(request).execute()
@@ -31,7 +33,7 @@ object DownloadHelper {
             
             val body = response.body ?: return@withContext null
             val contentLength = body.contentLength()
-            val targetFile = File(context.filesDir, fileName)
+            val targetFile = File(context.filesDir, sanitizedFileName)
             
             val inputStream: InputStream = body.byteStream()
             val outputStream = FileOutputStream(targetFile)

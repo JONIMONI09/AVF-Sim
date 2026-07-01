@@ -1,0 +1,54 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/settings.gradle.kts</file>
+  <line>18</line>
+  <module>My_Application</module>
+  <package>&lt;Standardpaket&gt;</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/settings.gradle.kts" />
+  <problem_class id="UnstableApiUsage" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Verwendung instabiler APIs</problem_class>
+  <description>'getRepositoriesMode()' ist mit @Incubating als instabil markiert</description>
+  <highlighted_element>repositoriesMode</highlighted_element>
+  <language>kotlin</language>
+  <offset>2</offset>
+  <length>16</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/settings.gradle.kts</file>
+  <line>18</line>
+  <module>My_Application</module>
+  <package>&lt;Standardpaket&gt;</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/settings.gradle.kts" />
+  <problem_class id="UnstableApiUsage" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Verwendung instabiler APIs</problem_class>
+  <description>'org.gradle.api.initialization.resolve.RepositoriesMode' ist mit @Incubating als instabil markiert</description>
+  <highlighted_element>RepositoriesMode</highlighted_element>
+  <language>kotlin</language>
+  <offset>23</offset>
+  <length>16</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/settings.gradle.kts</file>
+  <line>18</line>
+  <module>My_Application</module>
+  <package>&lt;Standardpaket&gt;</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/settings.gradle.kts" />
+  <problem_class id="UnstableApiUsage" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Verwendung instabiler APIs</problem_class>
+  <description>'FAIL_ON_PROJECT_REPOS' ist in dem mit @Incubating markierten instabilen Enum 'org.gradle.api.initialization.resolve.RepositoriesMode' deklariert</description>
+  <highlighted_element>FAIL_ON_PROJECT_REPOS</highlighted_element>
+  <language>kotlin</language>
+  <offset>40</offset>
+  <length>21</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/settings.gradle.kts</file>
+  <line>19</line>
+  <module>My_Application</module>
+  <package>&lt;Standardpaket&gt;</package>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/settings.gradle.kts" />
+  <problem_class id="UnstableApiUsage" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Verwendung instabiler APIs</problem_class>
+  <description>'repositories(org.gradle.api.Action&lt;? super org.gradle.api.artifacts.dsl.RepositoryHandler&gt;)' ist mit @Incubating als instabil markiert</description>
+  <highlighted_element>repositories</highlighted_element>
+  <language>kotlin</language>
+  <offset>2</offset>
+  <length>12</length>
+</problem>
+</problems>

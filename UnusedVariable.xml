@@ -1,0 +1,15 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>1997</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.MainActivityKt void AVFSimulatorApp(androidx.compose.ui.Modifier modifier, java.lang.String packageName, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onGrantShizukuPermissions, kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt; onRequestShizukuAuth)" />
+  <problem_class id="UnusedVariable" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendete Variable</problem_class>
+  <description>Nicht verwendete Variable</description>
+  <highlighted_element>pUrl</highlighted_element>
+  <language>kotlin</language>
+  <offset>56</offset>
+  <length>4</length>
+</problem>
+</problems>

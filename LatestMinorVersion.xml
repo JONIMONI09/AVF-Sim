@@ -1,0 +1,14 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties</file>
+  <line>3</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
+  <problem_class id="LatestMinorVersion" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Neueste Gradle-Minor-Version</problem_class>
+  <description>Eine neuere Minor-Version von Gradle ist verfügbar</description>
+  <highlighted_element>9.4.1</highlighted_element>
+  <language>Properties</language>
+  <offset>66</offset>
+  <length>5</length>
+</problem>
+</problems>

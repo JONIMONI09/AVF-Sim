@@ -1,0 +1,122 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>58</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'androidx-navigation-compose' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>androidx-navigation-compose</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>27</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>68</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'coil-compose' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>coil-compose</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>73</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'accompanist-permissions' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>accompanist-permissions</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>23</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>74</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'play-services-location' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>play-services-location</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>75</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'androidx-camera-camera2' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>androidx-camera-camera2</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>23</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>76</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'androidx-camera-lifecycle' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>androidx-camera-lifecycle</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>25</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>77</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'androidx-camera-view' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>androidx-camera-view</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>78</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'androidx-camera-core' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>androidx-camera-core</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>83</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'androidx-datastore-preferences' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>androidx-datastore-preferences</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>30</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/gradle/libs.versions.toml</file>
+  <line>89</line>
+  <module>My_Application</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/gradle/libs.versions.toml" />
+  <problem_class id="UnusedVersionCatalogEntry" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Nicht verwendeter Versionskatalog-Eintrag</problem_class>
+  <description>Abhängigkeitsalias 'firebase-ai' wird in Build-Skripten nicht verwendet</description>
+  <highlighted_element>firebase-ai</highlighted_element>
+  <language>TOML</language>
+  <offset>0</offset>
+  <length>11</length>
+</problem>
+</problems>

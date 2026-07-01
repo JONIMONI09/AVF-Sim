@@ -1,0 +1,28 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>223</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.OSImage OSImage(java.lang.String displayName, java.lang.String kernelName, java.lang.String downloadUrl, java.lang.String fileName)" />
+  <problem_class id="UnusedSymbol" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendetes Symbol</problem_class>
+  <description>Eigenschaft &quot;kernelName&quot; wird nie verwendet</description>
+  <highlighted_element>kernelName</highlighted_element>
+  <language>kotlin</language>
+  <offset>48</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/app/src/main/java/com/example/MainActivity.kt</file>
+  <line>2258</line>
+  <module>My_Application.app.main</module>
+  <package>com.example</package>
+  <entry_point TYPE="method" FQNAME="com.example.MainActivityKt void SelectionContainer(androidx.compose.runtime.internal.ComposableFunction0&lt;kotlin.Unit&gt; content)" />
+  <problem_class id="UnusedSymbol" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Nicht verwendetes Symbol</problem_class>
+  <description>Funktion &quot;SelectionContainer&quot; wird nie verwendet</description>
+  <highlighted_element>SelectionContainer</highlighted_element>
+  <language>kotlin</language>
+  <offset>4</offset>
+  <length>18</length>
+</problem>
+</problems>
