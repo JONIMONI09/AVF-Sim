@@ -43,11 +43,13 @@ import com.example.ui.theme.MyApplicationTheme
 import rikka.shizuku.Shizuku
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.File
 import java.io.RandomAccessFile
 import java.text.SimpleDateFormat
+import java.util.*
 import java.util.*
 
 class MainActivity : ComponentActivity() {
@@ -557,7 +559,7 @@ fun AVFSimulatorApp(
                     return@launch
                 }
                 diskCreatedLogs = "Erstelle Sparse Festplatten-Image..."
-                delay(200)
+                delay(200.milliseconds)
                 val baseExternalDir = context.getExternalFilesDir(null) ?: context.filesDir
                 val dir = File(baseExternalDir, "VirtualDisks")
                 if (!dir.exists()) {
@@ -665,7 +667,7 @@ fun AVFSimulatorApp(
 
             addLog("Executing Virtualization Backend...")
             addLog("> $cmd")
-            delay(500)
+            delay(500.milliseconds)
 
             val isShizukuReady = isShizukuAvailable && isShizukuAuthorized
             if (!isShizukuReady) {
@@ -1544,7 +1546,7 @@ fun AVFSimulatorApp(
                                     Text("Offizielle OS Images (Lightweight)", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                                     Text("Laden Sie vorkonfigurierte, leichtgewichtige System-Images direkt herunter:", fontSize = 12.sp)
                                     
-                                    OSImage.values().filter { it.downloadUrl.isNotEmpty() }.forEach { os ->
+                                    OSImage.entries.filter { it.downloadUrl.isNotEmpty() }.forEach { os ->
                                         Row(
                                             modifier = Modifier.fillMaxWidth(),
                                             horizontalArrangement = Arrangement.SpaceBetween,

@@ -3,16 +3,13 @@ package com.example
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import java.net.HttpURLConnection
 import java.net.URL
 
 object DownloadHelper {
-
-    private val client = OkHttpClient()
 
     /**
      * Downloads a file from a URL to the internal files directory.
@@ -25,17 +22,18 @@ object DownloadHelper {
     ): File? = withContext(Dispatchers.IO) {
         // Sanitize filename
         val sanitizedFileName = fileName.replace("..", "").replace("/", "")
+        var connection: HttpURLConnection? = null
         try {
-            val request = Request.Builder().url(url).build()
-            val response = client.newCall(request).execute()
+            val urlObj = URL(url)
+            connection = urlObj.openConnection() as HttpURLConnection
+            connection.connect()
             
-            if (!response.isSuccessful) return@withContext null
+            if (connection.responseCode != HttpURLConnection.HTTP_OK) return@withContext null
             
-            val body = response.body ?: return@withContext null
-            val contentLength = body.contentLength()
+            val contentLength = connection.contentLength.toLong()
             val targetFile = File(context.filesDir, sanitizedFileName)
             
-            val inputStream: InputStream = body.byteStream()
+            val inputStream: InputStream = connection.inputStream
             val outputStream = FileOutputStream(targetFile)
             
             val buffer = ByteArray(8192)
@@ -63,6 +61,8 @@ object DownloadHelper {
         } catch (e: Exception) {
             e.printStackTrace()
             return@withContext null
+        } finally {
+            connection?.disconnect()
         }
     }
 
@@ -75,20 +75,21 @@ object DownloadHelper {
         fileName: String,
         onProgress: (Float) -> Unit = {}
     ): File? = withContext(Dispatchers.IO) {
+        var connection: HttpURLConnection? = null
         try {
             val targetDir = File(context.getExternalFilesDir(null) ?: context.filesDir, "VirtualDisks")
             if (!targetDir.exists()) targetDir.mkdirs()
             
-            val request = Request.Builder().url(url).build()
-            val response = client.newCall(request).execute()
+            val urlObj = URL(url)
+            connection = urlObj.openConnection() as HttpURLConnection
+            connection.connect()
             
-            if (!response.isSuccessful) return@withContext null
+            if (connection.responseCode != HttpURLConnection.HTTP_OK) return@withContext null
             
-            val body = response.body ?: return@withContext null
-            val contentLength = body.contentLength()
+            val contentLength = connection.contentLength.toLong()
             val targetFile = File(targetDir, fileName)
             
-            val inputStream: InputStream = body.byteStream()
+            val inputStream: InputStream = connection.inputStream
             val outputStream = FileOutputStream(targetFile)
             
             val buffer = ByteArray(64 * 1024) // 64KB for large images
@@ -111,6 +112,8 @@ object DownloadHelper {
         } catch (e: Exception) {
             e.printStackTrace()
             return@withContext null
+        } finally {
+            connection?.disconnect()
         }
     }
 }

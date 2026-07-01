@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 import rikka.shizuku.Shizuku
 import java.io.File
 
@@ -173,18 +174,18 @@ fun SetupWizardScreen(
                     showAnalysis = true
                     
                     scope.launch {
-                        delay(500)
+                        delay(500.milliseconds)
                         isKvmSupported = File("/dev/kvm").exists()
-                        delay(400)
+                        delay(400.milliseconds)
                         isCrosvmFound = File("/apex/com.android.virt/bin/crosvm").exists()
-                        delay(600)
+                        delay(600.milliseconds)
                         isShizukuActive = try { Shizuku.getVersion() > 0 } catch(e: Throwable) { false }
-                        delay(300)
+                        delay(300.milliseconds)
                         
                         // Safe root checking - try which su first, then search common directories
                         val rootObj = try {
                             val process = Runtime.getRuntime().exec(arrayOf("which", "su"))
-                            val exitVal = kotlinx.coroutines.withTimeoutOrNull(300) {
+                            val exitVal = kotlinx.coroutines.withTimeoutOrNull(300.milliseconds) {
                                 process.waitFor()
                             }
                             if (exitVal == 0) {
@@ -202,7 +203,7 @@ fun SetupWizardScreen(
                         }
                         isRootActive = rootObj
 
-                        delay(500)
+                        delay(500.milliseconds)
                         analysisDone = true
                     }
                 },
