@@ -2,7 +2,7 @@
 
 [![Android 16](https://img.shields.io/badge/Android-16%20%22Baklava%22-green.svg)](https://developer.android.com/about/versions/16)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Architecture: AArch64](https://img.shields.io/badge/Architecture-ARM64%20%2F%20AArch64-orange.svg)](#architecture)
+[![Architecture: AArch64](https://img.shields.io/badge/Architecture-ARM64%20%2F%20AArch64-orange.svg)](#architecture-details)
 
 A professional-grade, high-performance virtualization manager for Android 13-16+. This suite provides a unified interface for the **Android Virtualization Framework (AVF/pKVM)**, **QEMU**, and a Podroid-optimized **PRoot Engine**.
 
@@ -10,12 +10,12 @@ A professional-grade, high-performance virtualization manager for Android 13-16+
 
 This "Remix" version incorporates several "intelligent" optimizations to bypass standard Android bottlenecks:
 
-- **Ultra-Fast Storage Engine**: `StorageHelper.kt` utilizes a **1MB high-performance buffer** for SAF localization, enabling rapid transfers of multi-gigabyte ISO and Disk images.
+- **Ultra-Fast Storage Engine**: `StorageHelper.kt` utilizes a **1MB high-performance buffer** for SAF localization, enabling rapid transfers of multi-gigabyte ISO and disk images.
 - **Native JNI Isolation (C++)**: The `native-lib.cpp` bridge implements `prctl(PR_SET_PDEATHSIG, SIGTERM)`, ensuring that virtual machine processes are automatically cleaned up if the host application terminates, preventing "zombie" VMs.
-- **Sparse Disk Generation**: Instantly create virtual disks (up to 100GB) that only occupy the actual space used on the physical storage.
+- **Sparse Disk Generation**: Instantly create virtual disks (up to 100GB) that only occupy the actual space used on physical storage.
 - **Android 16 "Baklava" Ready**: Native support for API 36 capabilities, including granular pKVM capability detection (`isAnyVmTypeSupported`).
 
-## 🛠 Architecture
+## 🛠 Architecture Details
 
 ```mermaid
 graph TD

@@ -15,6 +15,6 @@
 - **Diagnostics**: `DiagnosticHelper` must be updated whenever new capability checks are added.
 
 ## Verification
-- `gradle :app:assembleDebug`
+- `gradlew clean assembleDebug`
 - Manual verification of Shizuku binder connectivity.
 - Verification of Sparse Disk creation in `VirtualDisks` directory.
