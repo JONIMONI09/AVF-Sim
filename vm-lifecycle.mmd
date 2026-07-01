@@ -1,0 +1,13 @@
+stateDiagram-v2
+    [*] --> STOPPED
+
+    STOPPED --> BOOTING : Start Button / bootVirtualMachine()
+    BOOTING --> RUNNING : Process Started & Streams Open
+    BOOTING --> ERROR : Process Fail / Exit != 0
+
+    RUNNING --> STOPPED : Stop Button / process.destroy()
+    RUNNING --> STOPPED : VM Internal Shutdown / exitCode 0
+    RUNNING --> ERROR : Process Crash / Exit != 0
+
+    ERROR --> STOPPED : Reset / Clear Logs
+    ERROR --> BOOTING : Retry

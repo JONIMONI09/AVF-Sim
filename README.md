@@ -38,8 +38,9 @@ graph TD
 
 - **pKVM Acceleration**: Hardware-backed virtualization with near-native performance.
 - **Podroid-Style PRoot**: Direct CPU execution with optimized bind mounts (`/dev`, `/proc`, `/sys`) for Linux binaries.
-- **Integrated Display**: Embedded noVNC viewer for graphical guest OS interaction.
-- **Smart Shizuku Logic**: Automated binder acquisition and reflection-based permission granting.
+- **Integrated Display & Touch**: Embedded noVNC viewer with optimized QEMU/Crosvm absolute pointer mapping (`usb-tablet`) for perfect touch control.
+- **Smart Shizuku Logic**: Robust binder acquisition with version-aware reflection and automated permission granting for `USE_CUSTOM_VIRTUAL_MACHINE`.
+- **Automatic Asset Management**: Built-in `DownloadHelper` to fetch static QEMU/PRoot binaries and lightweight OS images (Alpine, Debian) directly in-app.
 - **WakeLock Persistence**: Foreground service with Partial WakeLocks to prevent Android's OOM killer from terminating active VMs.
 
 ## ⚠️ Troubleshooting for Developers

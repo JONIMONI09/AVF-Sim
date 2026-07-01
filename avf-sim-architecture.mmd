@@ -1,0 +1,55 @@
+
+flowchart TD
+    subgraph UI["UI & Management Layer (Kotlin/Compose)"]
+        MA["MainActivity"]
+        APP["AVFSimulatorApp"]
+        WP["VMProfile / VMState"]
+        SH["StorageHelper (Disk Mgmt)"]
+        DH["DiagnosticHelper"]
+    end
+
+    subgraph SEC["Security & Permissions"]
+        SZ["Shizuku Service"]
+        PM["Package Manager (Grant Permissions)"]
+    end
+
+    subgraph EXEC["Execution Layer (Backends)"]
+        JNI["JNI Wrapper (native-lib.cpp)"]
+        CV["Crosvm (AVF/pKVM)"]
+        QE["QEMU (Fallback)"]
+        PR["PRoot (Wrapper)"]
+    end
+
+    subgraph SYS["Android System / Hardware"]
+        KVM["/dev/kvm (Hardware Virt)"]
+        VIRT["/apex/com.android.virt"]
+        NET["Network (NAT/Bridge)"]
+    end
+
+    subgraph DISP["Display & Interaction"]
+        VNC["noVNC (WebView)"]
+        TERM["Terminal CLI"]
+    end
+
+    %% Relationships
+    MA --> APP
+    APP --> WP
+    APP --> SH
+    SH --> |Sparse Files| SYS
+
+    MA --> |Permissions| SZ
+    SZ --> |sh -c 'pm grant...'| PM
+
+    APP --> |forkAndExec| JNI
+    JNI --> |exec| CV
+    JNI --> |exec| QE
+    JNI --> |exec| PR
+
+    CV & QE --> KVM
+    CV --> VIRT
+
+    QE & CV --> |VNC Port| VNC
+    QE & CV --> |IO Stream| TERM
+
+    classDef main fill:#f9f,stroke:#333,stroke-width:2px;
+    class MA,APP,JNI,CV main;

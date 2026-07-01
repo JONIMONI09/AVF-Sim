@@ -8,9 +8,10 @@
 5. **Modern State**: Use specialized Compose state holders (`mutableIntStateOf`, etc.) and avoid legacy SDK checks (minSdk 35).
 
 ## Technical Standards
-- **JNI Bridge**: `native-lib.cpp` is the source of truth for `forkAndExec`. Environment variables and FD management are mandatory.
-- **Storage**: Never use `content://` URIs directly in shell commands. Use `StorageHelper` to localize files first.
-- **UI**: Jetpack Compose with Material Design 3. Ensure state hoisted to `MainActivity` or dedicated State objects.
+- **JNI Bridge**: `native-lib.cpp` is the source of truth for `forkAndExec`. Environment variables and FD management are mandatory. `prctl(PR_SET_PDEATHSIG, SIGTERM)` must be used to ensure process cleanup.
+- **Storage**: Never use `content://` URIs directly in shell commands. Use `StorageHelper` to localize files first. Use a 1MB buffer for high-performance copies.
+- **Asset Management**: Use `DownloadHelper` for all runtime binary and image downloads. Always verify file permissions (executable bit) after download.
+- **UI**: Jetpack Compose with Material Design 3. Ensure touch mapping for VNC uses absolute pointer devices (`usb-tablet`) in QEMU profiles.
 - **Diagnostics**: `DiagnosticHelper` must be updated whenever new capability checks are added.
 
 ## Verification
